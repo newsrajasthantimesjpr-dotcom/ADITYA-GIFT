@@ -1,0 +1,562 @@
+import React from 'react';
+import { motion } from 'motion/react';
+import { Car, Youtube, MessageCircle, Paintbrush, Zap, Gamepad2, Flame, Sparkles, Trophy, Radio, Shield, Star, Gauge, Heart } from 'lucide-react';
+
+export interface AnimProps {
+  realImage?: string;
+  key?: React.Key;
+}
+
+const DEFAULT_IMAGES = {
+  rithik: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=1200',
+  mayank: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1200',
+  himanshu: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=1200',
+  gaurav: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=1200',
+  alpesh: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=1200',
+  harshit: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1200',
+};
+
+// 1. RITHIK: BMW DRIFT MAXIMUM 3D ANIMATION
+export function RithikAnim({ realImage = DEFAULT_IMAGES.rithik }: AnimProps) {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden" style={{ perspective: 1800 }}>
+      {/* 3D Perspective Road & Grid Floor */}
+      <motion.div 
+        initial={{ rotateX: 75, y: 220, scale: 1.8, opacity: 0 }}
+        animate={{ rotateX: 75, y: 200, scale: 1.2, opacity: 1 }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+        className="absolute w-[140%] h-[700px] bg-gradient-to-b from-slate-900 via-zinc-950 to-black border-t-2 border-cyan-400/50 flex flex-col items-center justify-center overflow-hidden"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* Animated Cyber Drift Lines */}
+        <div className="w-full h-full bg-[linear-gradient(90deg,transparent_48%,rgba(6,182,212,0.4)_50%,transparent_52%)] bg-[size:80px_35px] animate-pulse" />
+        
+        {/* Curved Drift Skid Marks */}
+        <motion.svg 
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 0.9 }}
+          transition={{ duration: 1.8, delay: 0.4, ease: 'easeInOut' }}
+          className="absolute inset-0 w-full h-full stroke-cyan-400 stroke-[10px] fill-none filter blur-[3px]"
+        >
+          <path d="M 50 600 Q 350 200 750 380 T 1550 80" />
+        </motion.svg>
+        <motion.svg 
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 0.9 }}
+          transition={{ duration: 1.8, delay: 0.5, ease: 'easeInOut' }}
+          className="absolute inset-0 w-full h-full stroke-blue-500 stroke-[10px] fill-none filter blur-[3px]"
+        >
+          <path d="M 70 620 Q 370 220 770 400 T 1570 100" />
+        </motion.svg>
+      </motion.div>
+
+      {/* 3D Flying Smoke & Speed Sparks in foreground/background */}
+      <div className="absolute inset-0 pointer-events-none z-10">
+        {[...Array(16)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.2, x: 200 - i * 35, y: 80 + (i % 4) * 20 }}
+            animate={{ 
+              opacity: [0, 0.8, 0], 
+              scale: [0.4, 3.5 + i * 0.3, 5], 
+              x: [-150 - i * 40, -400 - i * 60],
+              y: [-30, -120]
+            }}
+            transition={{ duration: 2.2, repeat: Infinity, delay: i * 0.12, ease: 'linear' }}
+            className="absolute bottom-1/4 left-1/2 w-28 h-28 rounded-full bg-cyan-400/25 blur-3xl"
+          />
+        ))}
+      </div>
+
+      {/* 3D BMW REAL IMAGE CAR DRIFT CONTAINER */}
+      <motion.div
+        initial={{ x: 1400, z: -1800, rotateY: -120, rotateZ: 30, scale: 0.2 }}
+        animate={{
+          x: [1400, -100, 0, 0],
+          z: [-1800, -300, 0, 0],
+          rotateY: [-120, 50, -18, 0],
+          rotateZ: [30, -14, 4, 0],
+          rotateX: [0, 10, -5, 0],
+          scale: [0.2, 1.3, 1, 1],
+        }}
+        transition={{
+          duration: 2.6,
+          times: [0, 0.6, 0.85, 1],
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="relative z-20 w-[92%] max-w-xl aspect-[16/9] rounded-[2rem] overflow-hidden border-2 border-cyan-400/60 shadow-[0_0_100px_rgba(6,182,212,0.8),inset_0_0_40px_rgba(6,182,212,0.3)] group"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* ANIMATED REAL IMAGE - Dynamic 3D Pan, Scale & Camera Vibration */}
+        <motion.img 
+          src={realImage} 
+          alt="Rithik BMW Drift" 
+          referrerPolicy="no-referrer"
+          animate={{
+            scale: [1, 1.18, 1.05],
+            x: [0, -15, 15, 0],
+            rotateZ: [0, 1.5, -1.5, 0]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            ease: 'easeInOut'
+          }}
+          className="w-full h-full object-cover filter contrast-110 saturate-125"
+        />
+
+        {/* 3D Holographic Light Sweep Across Real Image */}
+        <motion.div 
+          animate={{ x: [-500, 800] }}
+          transition={{ duration: 3, repeat: Infinity, repeatDelay: 1, ease: 'linear' }}
+          className="absolute inset-0 w-48 bg-gradient-to-r from-transparent via-cyan-300/30 to-transparent -skew-x-12 blur-sm pointer-events-none"
+        />
+        
+        {/* Dark Vignette & Neon Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-slate-950/30 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(6,182,212,0.4),transparent_65%)]" />
+        
+        {/* Floating 3D Badge on Top of Real Image */}
+        <motion.div 
+          animate={{ y: [-4, 4, -4] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-4 left-6 px-4 py-2 rounded-full bg-cyan-500/30 border border-cyan-400/60 text-cyan-200 text-xs font-black tracking-widest uppercase backdrop-blur-md flex items-center gap-2 shadow-[0_0_20px_cyan]"
+          style={{ transform: 'translateZ(60px)' }}
+        >
+          <Car className="size-4 text-cyan-300 animate-bounce" /> M-POWER DRIFT APEX
+        </motion.div>
+
+        {/* 3D Speedometer Gauge Badge */}
+        <div 
+          className="absolute bottom-4 right-6 text-right bg-black/60 p-4 rounded-2xl border border-cyan-500/40 backdrop-blur-md flex items-center gap-3 shadow-2xl"
+          style={{ transform: 'translateZ(80px)' }}
+        >
+          <Gauge className="size-8 text-cyan-400 animate-pulse" />
+          <div>
+            <span className="text-3xl font-black text-white italic tracking-tighter drop-shadow-[0_0_10px_cyan]">
+              320 <span className="text-sm font-normal text-cyan-400">KM/H</span>
+            </span>
+            <p className="text-[10px] text-cyan-300 font-bold tracking-widest uppercase">Twin-Turbo Drift Mode</p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// 2. MAYANK: YOUTUBE CONTENT VIEWER MAXIMUM 3D ANIMATION
+export function MayankAnim({ realImage = DEFAULT_IMAGES.mayank }: AnimProps) {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden" style={{ perspective: 1800 }}>
+      {/* 3D Floating Youtube Play & Video Card Icons popping out in depth */}
+      <div className="absolute inset-0 pointer-events-none z-10">
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0, z: -1000, x: (i - 6) * 130, y: Math.sin(i) * 100 }}
+            animate={{ 
+              opacity: [0, 0.95, 0], 
+              scale: [0.4, 1.8, 0], 
+              z: [ -1000, 450 ],
+              rotateY: [0, 360],
+              rotateZ: [0, (i % 2 === 0 ? 30 : -30)]
+            }}
+            transition={{ duration: 3.5, repeat: Infinity, delay: i * 0.25, ease: 'linear' }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-2xl bg-rose-600/40 border border-rose-400/60 backdrop-blur-md flex items-center justify-center shadow-[0_0_40px_rgba(225,29,72,0.6)]"
+          >
+            <Youtube className="text-rose-200 size-8" />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Rotating 3D Holographic Neon Ring behind Real Image */}
+      <motion.div 
+        animate={{ rotateZ: 360, rotateY: [0, 30, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
+        className="absolute w-[600px] h-[600px] rounded-full border-2 border-dashed border-rose-500/40 pointer-events-none blur-[1px]"
+      />
+
+      {/* Main 3D Real Image Card */}
+      <motion.div
+        initial={{ scale: 0, rotateX: 180, z: -1200, opacity: 0 }}
+        animate={{ 
+          scale: 1, 
+          rotateX: 0, 
+          rotateY: 0,
+          z: 0, 
+          opacity: 1 
+        }}
+        transition={{ duration: 1.8, type: 'spring', bounce: 0.4 }}
+        className="relative z-20 w-[92%] max-w-xl aspect-[16/9] rounded-[2rem] overflow-hidden border-2 border-rose-500/60 shadow-[0_0_100px_rgba(225,29,72,0.8),inset_0_0_40px_rgba(225,29,72,0.3)] group"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* ANIMATED REAL IMAGE - Breathing 3D Zoom & Perspective Tilt */}
+        <motion.img 
+          src={realImage} 
+          alt="Mayank YouTube Content Viewer" 
+          referrerPolicy="no-referrer"
+          animate={{
+            scale: [1, 1.15, 1],
+            y: [0, -10, 0],
+            rotateZ: [0, 1, 0]
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            ease: 'easeInOut'
+          }}
+          className="w-full h-full object-cover filter contrast-105 saturate-125"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-rose-950/30 to-transparent" />
+        
+        {/* Animated 3D Play Button overlay pulsing out towards camera */}
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          style={{ transform: 'translateZ(90px)' }}
+        >
+          <div className="w-24 h-24 rounded-full bg-rose-600/90 backdrop-blur-md border border-white/60 flex items-center justify-center shadow-[0_0_60px_rgba(225,29,72,1)]">
+            <div className="w-0 h-0 border-t-[14px] border-t-transparent border-l-[26px] border-l-white border-b-[14px] border-b-transparent ml-2 drop-shadow-lg" />
+          </div>
+        </motion.div>
+
+        {/* Floating 4K Binge Viewer Badge */}
+        <div 
+          className="absolute top-4 left-6 px-4 py-2 rounded-full bg-rose-600/40 border border-rose-400/60 text-white text-xs font-black tracking-widest uppercase backdrop-blur-md flex items-center gap-2 shadow-[0_0_20px_rose]"
+          style={{ transform: 'translateZ(60px)' }}
+        >
+          <Youtube className="size-4 animate-pulse text-red-300" /> YOUTUBE CONTENT VIEWER • 4K BINGE
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// 3. HIMANSHU: CHATTERBOX & MASTER STORYTELLER MAXIMUM 3D ANIMATION
+export function HimanshuAnim({ realImage = DEFAULT_IMAGES.himanshu }: AnimProps) {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden" style={{ perspective: 1800 }}>
+      {/* 3D Floating Speech Bubbles & Sound Wave Particles */}
+      <div className="absolute inset-0 pointer-events-none z-10">
+        {[...Array(10)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 300, x: (i - 5) * 120, scale: 0.3 }}
+            animate={{ 
+              opacity: [0, 0.9, 0], 
+              y: [-100 - i * 40],
+              scale: [0.3, 1.2, 0.8],
+              rotateZ: [0, (i % 2 === 0 ? 15 : -15)]
+            }}
+            transition={{ duration: 3.2, repeat: Infinity, delay: i * 0.3, ease: 'easeOut' }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 px-4 py-2 rounded-2xl bg-gradient-to-r from-amber-500/40 to-orange-500/40 border border-amber-300/60 backdrop-blur-md text-amber-100 text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-[0_0_25px_orange]"
+          >
+            <MessageCircle className="size-4 text-yellow-300" /> CHATTERBOX #{i + 1}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* 3D Equalizer Spectrum Bars Floating in Orbit */}
+      <div className="absolute inset-0 flex items-center justify-center gap-2.5 opacity-40 pointer-events-none z-0">
+        {[...Array(30)].map((_, i) => (
+          <motion.div
+            key={i}
+            animate={{ height: ['10%', '90%', '20%', '100%', '30%'] }}
+            transition={{ duration: 0.6 + (i % 6) * 0.15, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
+            className="w-2.5 bg-gradient-to-t from-amber-500 via-orange-400 to-yellow-300 rounded-full shadow-[0_0_20px_orange]"
+          />
+        ))}
+      </div>
+
+      {/* Main 3D Real Image Card */}
+      <motion.div
+        initial={{ y: 600, scale: 0.3, opacity: 0, rotateZ: -30, rotateX: 45 }}
+        animate={{ y: 0, scale: 1, opacity: 1, rotateZ: 0, rotateX: 0 }}
+        transition={{ duration: 1.8, type: 'spring', bounce: 0.4 }}
+        className="relative z-20 w-[92%] max-w-xl aspect-[16/9] rounded-[2rem] overflow-hidden border-2 border-amber-400/60 shadow-[0_0_100px_rgba(245,158,11,0.8),inset_0_0_40px_rgba(245,158,11,0.3)] group"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* ANIMATED REAL IMAGE - Dynamic Beat Zooming & Light Pulse */}
+        <motion.img 
+          src={realImage} 
+          alt="Himanshu Chatterbox" 
+          referrerPolicy="no-referrer"
+          animate={{
+            scale: [1, 1.12, 1.04, 1.15, 1],
+            rotateZ: [0, -1, 1, 0]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            ease: 'easeInOut'
+          }}
+          className="w-full h-full object-cover filter contrast-110 saturate-120"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-amber-950/30 to-transparent" />
+        
+        {/* Floating 3D Speech Bubble Popping Out */}
+        <motion.div 
+          animate={{ y: [-8, 8, -8], rotateZ: [-2, 2, -2] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-6 right-6 px-5 py-2.5 rounded-2xl bg-amber-500/40 backdrop-blur-md border border-amber-300/60 text-amber-100 text-xs font-black tracking-widest uppercase flex items-center gap-2 shadow-[0_0_25px_amber]"
+          style={{ transform: 'translateZ(70px)' }}
+        >
+          <MessageCircle className="size-4 text-yellow-300 animate-bounce" /> NON-STOP SQUAD CHATTER & JOKES
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+
+// 4. GAURAV: DIY & ART MASTER REFINED MAXIMUM 3D ANIMATION
+export function GauravAnim({ realImage = DEFAULT_IMAGES.gaurav }: AnimProps) {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden" style={{ perspective: 1800 }}>
+      {/* 3D Floating Paintbrushes & Color Splash Orbs */}
+      <div className="absolute inset-0 pointer-events-none z-10">
+        {[...Array(14)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              opacity: 0, 
+              scale: 0.2, 
+              x: (i - 7) * 110, 
+              y: Math.sin(i) * 160,
+              z: -800
+            }}
+            animate={{ 
+              opacity: [0, 0.9, 0], 
+              scale: [0.3, 1.6, 0], 
+              z: [-800, 500],
+              rotateZ: [0, 360],
+              rotateY: [0, 180]
+            }}
+            transition={{ duration: 4, repeat: Infinity, delay: i * 0.22, ease: 'easeInOut' }}
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 rounded-2xl backdrop-blur-md border shadow-2xl flex items-center gap-2 ${
+              i % 4 === 0 ? 'bg-emerald-500/40 border-emerald-300/60 text-emerald-200 shadow-[0_0_30px_emerald]' :
+              i % 4 === 1 ? 'bg-teal-500/40 border-teal-300/60 text-teal-200 shadow-[0_0_30px_teal]' :
+              i % 4 === 2 ? 'bg-cyan-500/40 border-cyan-300/60 text-cyan-200 shadow-[0_0_30px_cyan]' :
+              'bg-amber-500/40 border-amber-300/60 text-amber-200 shadow-[0_0_30px_amber]'
+            }`}
+          >
+            <Paintbrush className="size-6 animate-spin" />
+            <Sparkles className="size-4 animate-pulse" />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Dynamic 3D Neon Paint Stroke SVG Curves sweeping across space */}
+      <motion.svg 
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: [0, 1, 1], opacity: [0, 1, 0.8] }}
+        transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 0.5, ease: "easeInOut" }}
+        className="absolute inset-0 w-full h-full stroke-emerald-400 stroke-[18px] stroke-round fill-none filter blur-[4px] opacity-90 z-10 pointer-events-none"
+      >
+        <path d="M 50,650 C 350,50 850,550 1350,150" />
+      </motion.svg>
+      <motion.svg 
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: [0, 1, 1], opacity: [0, 0.9, 0.7] }}
+        transition={{ duration: 2.5, delay: 0.4, repeat: Infinity, repeatDelay: 0.5, ease: "easeInOut" }}
+        className="absolute inset-0 w-full h-full stroke-teal-300 stroke-[14px] stroke-round fill-none filter blur-[3px] z-10 pointer-events-none"
+      >
+        <path d="M 120,100 C 450,700 750,50 1450,600" />
+      </motion.svg>
+
+      {/* Rotating Holographic Color Wheel Ring behind Canvas */}
+      <motion.div 
+        animate={{ rotateZ: 360, rotateX: [0, 20, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+        className="absolute w-[580px] h-[580px] rounded-full border-4 border-dashed border-emerald-400/50 pointer-events-none blur-[1px] shadow-[0_0_80px_rgba(16,185,129,0.5)]"
+      />
+
+      {/* Main 3D Real Image Canvas Card */}
+      <motion.div
+        initial={{ x: -1200, rotateY: 100, rotateZ: -15, opacity: 0 }}
+        animate={{ x: 0, rotateY: 0, rotateZ: 0, opacity: 1 }}
+        transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-20 w-[92%] max-w-xl aspect-[16/9] rounded-[2rem] overflow-hidden border-2 border-emerald-400/70 shadow-[0_0_120px_rgba(16,185,129,0.9),inset_0_0_50px_rgba(16,185,129,0.4)] group"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* ANIMATED REAL IMAGE - Brush Canvas Pan & 3D Depth Shift */}
+        <motion.img 
+          src={realImage} 
+          alt="Gaurav DIY & Art Studio" 
+          referrerPolicy="no-referrer"
+          animate={{
+            scale: [1, 1.18, 1.05],
+            x: [0, 12, -12, 0],
+            y: [0, -10, 10, 0]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            ease: 'easeInOut'
+          }}
+          className="w-full h-full object-cover filter contrast-110 saturate-125"
+        />
+
+        {/* Dynamic Art Canvas Light Sweep */}
+        <motion.div 
+          animate={{ x: [-450, 800] }}
+          transition={{ duration: 3.5, repeat: Infinity, repeatDelay: 1, ease: 'linear' }}
+          className="absolute inset-0 w-48 bg-gradient-to-r from-transparent via-emerald-300/35 to-transparent -skew-x-12 blur-md pointer-events-none"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-emerald-950/30 to-transparent" />
+        
+        {/* Floating 3D Art Badge */}
+        <div 
+          className="absolute top-4 left-6 px-4 py-2 rounded-full bg-emerald-600/50 border border-emerald-400/70 text-emerald-100 text-xs font-black tracking-widest uppercase backdrop-blur-md flex items-center gap-2 shadow-[0_0_25px_emerald]"
+          style={{ transform: 'translateZ(60px)' }}
+        >
+          <Paintbrush className="size-4 text-teal-300 animate-spin" /> MASTER DIY CRAFTS & 3D ART
+        </div>
+
+        {/* 3D Palette Badge at Bottom Right */}
+        <div 
+          className="absolute bottom-4 right-6 bg-black/70 p-3.5 rounded-2xl border border-emerald-400/50 backdrop-blur-md flex items-center gap-3 shadow-2xl"
+          style={{ transform: 'translateZ(80px)' }}
+        >
+          <div className="flex -space-x-2">
+            <span className="size-5 rounded-full bg-red-500 border border-white" />
+            <span className="size-5 rounded-full bg-yellow-400 border border-white" />
+            <span className="size-5 rounded-full bg-emerald-400 border border-white" />
+            <span className="size-5 rounded-full bg-cyan-400 border border-white" />
+          </div>
+          <div>
+            <span className="text-xs font-black text-emerald-300 uppercase tracking-wider block">Vivid 3D Palette</span>
+            <span className="text-[10px] text-zinc-300 font-bold">Infinite Creativity</span>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// 5. ALPESH: SUPERHERO MAXIMUM 3D ANIMATION
+export function AlpeshAnim({ realImage = DEFAULT_IMAGES.alpesh }: AnimProps) {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden" style={{ perspective: 1800 }}>
+      {/* Superhero Shockwave Rings */}
+      <motion.div
+        initial={{ scale: 0, opacity: 1 }}
+        animate={{ scale: [0, 3.5, 6], opacity: [1, 0.5, 0] }}
+        transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 0.8, ease: 'easeOut' }}
+        className="absolute w-72 h-72 rounded-full border-4 border-indigo-400 blur-sm shadow-[0_0_100px_indigo] pointer-events-none z-10"
+      />
+
+      {/* Main 3D Superhero Real Image Card */}
+      <motion.div
+        initial={{ y: -1400, scale: 3, opacity: 0, rotateX: 60 }}
+        animate={{ 
+          y: [ -1400, 30, 0 ], 
+          scale: [ 3, 0.95, 1 ], 
+          opacity: 1, 
+          rotateX: [ 60, -10, 0 ] 
+        }}
+        transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-20 w-[92%] max-w-xl aspect-[16/9] rounded-[2rem] overflow-hidden border-2 border-indigo-400/70 shadow-[0_0_120px_rgba(99,102,241,0.9),inset_0_0_40px_rgba(99,102,241,0.4)] group"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* ANIMATED REAL IMAGE - Heroic Camera Shake & Lightning Glow Pulse */}
+        <motion.img 
+          src={realImage} 
+          alt="Alpesh Superhero" 
+          referrerPolicy="no-referrer"
+          animate={{
+            scale: [1, 1.16, 1.05],
+            y: [0, -10, 0]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            ease: 'easeInOut'
+          }}
+          className="w-full h-full object-cover filter contrast-115 saturate-130"
+        />
+
+        {/* Lightning Flash overlay */}
+        <motion.div 
+          animate={{ opacity: [0, 0.4, 0, 0.6, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1, ease: 'easeInOut' }}
+          className="absolute inset-0 bg-indigo-500/30 mix-blend-overlay pointer-events-none"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-indigo-950/30 to-transparent" />
+        
+        {/* Floating Titanium Shield Badge */}
+        <div 
+          className="absolute top-4 left-6 px-4 py-2 rounded-full bg-indigo-600/50 border border-indigo-300/60 text-indigo-100 text-xs font-black tracking-widest uppercase backdrop-blur-md flex items-center gap-2 shadow-[0_0_30px_indigo]"
+          style={{ transform: 'translateZ(70px)' }}
+        >
+          <Zap className="size-4 text-amber-300 animate-bounce" /> TITANIUM HEROIC SHIELD
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// 6. HARSHIT: FREE FIRE GAMER MAXIMUM 3D ANIMATION
+export function HarshitAnim({ realImage = DEFAULT_IMAGES.harshit }: AnimProps) {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden" style={{ perspective: 1800 }}>
+      {/* Booyah Victory Burst Badge Floating in 3D Space */}
+      <motion.div
+        initial={{ scale: 0, rotate: -45, opacity: 0 }}
+        animate={{ scale: [0, 1.25, 1], rotate: 0, opacity: 1 }}
+        transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-6 z-30 px-8 py-3 rounded-full bg-gradient-to-r from-orange-600 via-amber-500 to-red-600 border-2 border-amber-300 text-white font-black text-2xl tracking-widest uppercase shadow-[0_0_60px_rgba(249,115,22,0.9)] flex items-center gap-3"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        <Flame className="size-8 text-yellow-300 animate-pulse" /> BOOYAH! GRANDMASTER
+      </motion.div>
+
+      {/* Main 3D Real Image Esports Card */}
+      <motion.div
+        initial={{ z: 2200, rotateX: 360, opacity: 0, scale: 0 }}
+        animate={{ z: 0, rotateX: 0, opacity: 1, scale: 1 }}
+        transition={{ duration: 2.2, type: 'spring', bounce: 0.4 }}
+        className="relative z-20 w-[92%] max-w-xl aspect-[16/9] rounded-[2rem] overflow-hidden border-2 border-orange-500/70 shadow-[0_0_120px_rgba(249,115,22,0.9),inset_0_0_40px_rgba(249,115,22,0.4)] group"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* ANIMATED REAL IMAGE - Esports Zoom & Muzzle Flare Vibration */}
+        <motion.img 
+          src={realImage} 
+          alt="Harshit Free Fire" 
+          referrerPolicy="no-referrer"
+          animate={{
+            scale: [1, 1.15, 1.05],
+            x: [0, -5, 5, 0],
+            y: [0, -5, 5, 0]
+          }}
+          transition={{
+            duration: 4.5,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            ease: 'easeInOut'
+          }}
+          className="w-full h-full object-cover filter contrast-110 saturate-125"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-orange-950/30 to-transparent" />
+        
+        {/* Floating Esports Badge */}
+        <div 
+          className="absolute bottom-4 left-6 px-4 py-2 rounded-full bg-orange-600/50 border border-orange-400/60 text-orange-100 text-xs font-black tracking-widest uppercase backdrop-blur-md flex items-center gap-2 shadow-[0_0_25px_orange]"
+          style={{ transform: 'translateZ(60px)' }}
+        >
+          <Gamepad2 className="size-4 text-amber-300 animate-pulse" /> FREE FIRE PRO CLUTCH
+        </div>
+      </motion.div>
+    </div>
+  );
+}

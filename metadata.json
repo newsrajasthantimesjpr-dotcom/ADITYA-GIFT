@@ -1,0 +1,181 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { X, RotateCcw, ChevronLeft, ChevronRight, Sparkles, Heart } from 'lucide-react';
+import { Friend } from '../data';
+import { RithikAnim, MayankAnim, HimanshuAnim, GauravAnim, AlpeshAnim, HarshitAnim } from './FriendAnimations';
+
+interface ShowcaseProps {
+  friend: Friend;
+  onClose: () => void;
+  onNext: () => void;
+  onPrev: () => void;
+}
+
+export default function FriendShowcase({ friend, onClose, onNext, onPrev }: ShowcaseProps) {
+  const [key, setKey] = useState(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    setKey((prev) => prev + 1);
+  }, [friend.id]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setMousePos({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setMousePos({ x: 0, y: 0 });
+  };
+
+  const handleReplay = () => {
+    setKey((prev) => prev + 1);
+  };
+
+  const IconComponent = friend.icon;
+
+  const render3DAnimation = () => {
+    switch (friend.id) {
+      case 'rithik':
+        return <RithikAnim key={key} realImage={friend.realImage} />;
+      case 'mayank':
+        return <MayankAnim key={key} realImage={friend.realImage} />;
+      case 'himanshu':
+        return <HimanshuAnim key={key} realImage={friend.realImage} />;
+      case 'gaurav':
+        return <GauravAnim key={key} realImage={friend.realImage} />;
+      case 'alpesh':
+        return <AlpeshAnim key={key} realImage={friend.realImage} />;
+      case 'harshit':
+        return <HarshitAnim key={key} realImage={friend.realImage} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-8 overflow-hidden"
+    >
+      {/* Background Ambient Glow */}
+      <div className={`absolute inset-0 bg-gradient-to-tr ${friend.bgGlow} opacity-30 blur-[160px] pointer-events-none`} />
+
+      {/* Top Header Bar */}
+      <div className="absolute top-6 left-6 right-6 z-50 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl">
+            <IconComponent className="size-6 text-cyan-400" />
+          </div>
+          <div>
+            <h3 className="text-white font-black text-2xl tracking-tight uppercase flex items-center gap-2">
+              {friend.name} <Heart className="size-4 text-rose-500 fill-rose-500" />
+            </h3>
+            <p className="text-xs text-white/70 font-bold uppercase tracking-widest">{friend.interest}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleReplay}
+            className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-black tracking-widest uppercase backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105 shadow-lg"
+          >
+            <RotateCcw className="size-4 text-cyan-400" /> Replay 3D Drift
+          </button>
+          
+          <button
+            onClick={onClose}
+            className="p-3 rounded-full bg-white/10 hover:bg-red-500/30 border border-white/20 hover:border-red-500/50 text-white transition-all hover:scale-110 shadow-lg"
+            title="Close Showcase"
+          >
+            <X className="size-6" />
+          </button>
+        </div>
+      </div>
+
+      {/* Interactive 16:9 3D Parallax Stage */}
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        animate={{
+          rotateY: mousePos.x * 20,
+          rotateX: -mousePos.y * 20,
+        }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className="relative w-full max-w-6xl aspect-[16/9] bg-slate-950/90 rounded-[2.5rem] border-2 border-white/20 overflow-hidden shadow-[0_0_150px_rgba(0,0,0,0.95)] flex flex-col justify-between"
+        style={{ transformStyle: 'preserve-3d', perspective: 2000 }}
+      >
+        {/* 3D Animated Layer (Sequence 1) */}
+        <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+          {render3DAnimation()}
+        </div>
+
+        {/* Text & Specs Overlay (Sequence 2) */}
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: 50, z: -100 }}
+            animate={{ opacity: 1, y: 0, z: 60 }}
+            transition={{ delay: 2, duration: 0.8 }}
+            className="absolute bottom-0 inset-x-0 z-30 p-6 md:p-10 bg-gradient-to-t from-black via-black/85 to-transparent flex flex-col md:flex-row items-end justify-between gap-6 pointer-events-auto"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {/* Left Column: Name & Description */}
+            <div className="max-w-xl text-left space-y-3">
+              <div className="flex items-center gap-3">
+                <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest bg-white/10 border ${friend.borderColor} ${friend.textColor}`}>
+                  {friend.interest}
+                </span>
+                <span className="text-xs text-amber-300 font-bold uppercase tracking-wider flex items-center gap-1">
+                  <Sparkles className="size-3 text-amber-300 animate-pulse" /> Happy Friendship Day
+                </span>
+              </div>
+
+              <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter drop-shadow-2xl">
+                {friend.name}
+              </h2>
+
+              <p className="text-sm md:text-base text-zinc-200 font-medium leading-relaxed drop-shadow-md bg-black/40 p-4 rounded-2xl border border-white/10 backdrop-blur-sm">
+                {friend.description}
+              </p>
+            </div>
+
+            {/* Right Column: Key Stats Badges */}
+            <div className="flex flex-wrap md:flex-nowrap gap-3">
+              {friend.stats.map((stat, idx) => (
+                <div 
+                  key={idx}
+                  className="px-4 py-3 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-center min-w-[110px] shadow-xl"
+                >
+                  <div className="text-[10px] text-zinc-400 font-black uppercase tracking-wider">{stat.label}</div>
+                  <div className={`text-xl font-black ${friend.textColor} drop-shadow`}>{stat.value}</div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Navigation Arrows on Left and Right of Stage */}
+        <button
+          onClick={onPrev}
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-40 p-4 rounded-full bg-black/70 hover:bg-cyan-500/30 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-125 shadow-2xl"
+          title="Previous Friend"
+        >
+          <ChevronLeft className="size-7" />
+        </button>
+
+        <button
+          onClick={onNext}
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-40 p-4 rounded-full bg-black/70 hover:bg-cyan-500/30 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-125 shadow-2xl"
+          title="Next Friend"
+        >
+          <ChevronRight className="size-7" />
+        </button>
+
+      </motion.div>
+    </motion.div>
+  );
+}
